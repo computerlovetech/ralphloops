@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ralph Loops — A minimal, open format for portable agent loops</title>
+  <meta name="description" content="Ralph Loops is a minimal, open format for packaging autonomous agent loops as portable directories centered on a RALPH.md file.">
+  <meta name="author" content="Ralph Loops contributors">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ralph Loops — A minimal, open format for portable agent loops">
+  <meta property="og:description" content="Define the task, feedback commands, and constraints in a RALPH.md file. Bundle scripts alongside it. Any compatible runtime can execute it.">
+  <meta property="og:url" content="https://ralphloops.io/">
+  <meta property="og:site_name" content="Ralph Loops">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ralph Loops — A minimal, open format for portable agent loops">
+  <meta name="twitter:description" content="Define the task, feedback commands, and constraints in a RALPH.md file. Any compatible runtime can execute it.">
+
+  <meta name="theme-color" content="#ffffff">
+  <link rel="canonical" href="https://ralphloops.io/">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔁</text></svg>">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/">
+      <span class="brand-mark">🔁</span>
+      <span class="brand-name">Ralph Loops</span>
+      <span class="brand-tag">proposed format</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/specification/">Specification</a>
+      <a class="nav-github" href="https://github.com/ralphloops/ralphloops">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="container">
+    <h1>Ralph Loops</h1>
+    <p class="lede">
+      A minimal, open format for packaging autonomous agent loops
+      as portable directories.
+    </p>
+    <p class="sub">
+      Define the task, feedback commands, and constraints in a
+      <code>RALPH.md</code> file. Bundle scripts and docs alongside it.
+      Any compatible runtime can execute it.
+    </p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/specification/">Read the spec</a>
+      <a class="btn" href="https://github.com/ralphloops/ralphloops">GitHub</a>
+    </div>
+
+    <pre class="hero-code"><code>my-loop/
+├── RALPH.md
+├── scripts/
+│   └── run-tests.sh
+└── docs/
+    └── conventions.md</code></pre>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2>What is a Ralph Loop?</h2>
+    <div class="grid-2">
+      <div>
+        <p>
+          A <strong>Ralph Loop</strong> is a self-contained directory package
+          that describes an autonomous agent loop. Every package has one
+          required entrypoint file — <code>RALPH.md</code> — and may bundle
+          any supporting scripts, prompts, templates, fixtures, or reference
+          docs beside it.
+        </p>
+        <p>
+          Compatible runtimes discover <code>RALPH.md</code>, run the
+          specified <code>agent</code>, execute <code>commands</code>, and
+          inject <code>args</code> into the loop instructions.
+        </p>
+        <p>
+          The format is deliberately small. It does not mandate a runtime,
+          an execution engine, or a single metadata schema beyond a tiny
+          required core.
+        </p>
+      </div>
+      <div>
+        <pre><code>---
+agent: claude -p --dangerously-skip-permissions
+commands:
+  - name: tests
+    run: uv run pytest -x
+  - name: types
+    run: uv run ty check
+  - name: lint
+    run: uv run ruff check .
+args:
+  - focus
+---
+
+# Bug Hunter
+
+Find and fix a real bug in this codebase.
+{{ args.focus }}
+
+## Test results
+{{ commands.tests }}
+
+## Type checking
+{{ commands.types }}
+
+## Lint
+{{ commands.lint }}
+
+Each iteration:
+1. Read code — look for edge cases,
+   missing validation, or logic errors.
+2. Write a failing test to prove the bug.
+3. Fix the bug with a minimal change.
+4. Verify all existing tests still pass.</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-bottom">
+    <p class="muted small">
+      Ralph Loops — an open proposed format.
+      <a href="https://github.com/ralphloops/ralphloops">GitHub</a> &middot;
+      <a href="https://github.com/ralphloops/ralphloops/discussions">Discussions</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

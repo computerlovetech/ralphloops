@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Specification — Ralph Loops</title>
+  <meta name="description" content="The Ralph Loops specification (v0.1 draft): a directory-based, portable format for Ralph-style agent loops.">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔁</text></svg>">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="/"><span class="brand-mark">🔁</span><span class="brand-name">Ralph Loops</span><span class="brand-tag">proposed format</span></a>
+    <nav class="nav-links">
+      <a href="/specification/">Specification</a>
+      <a class="nav-github" href="https://github.com/ralphloops/ralphloops">GitHub</a>
+
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <p class="eyebrow">v0.1 draft</p>
+  <h1>Ralph Loops Specification</h1>
+
+  <p class="sub muted">
+    An open proposed format for packaging autonomous agent loops as portable
+    directories. Not a standard — breaking changes go through the
+    <a href="https://github.com/ralphloops/ralphloops">canonical repository</a>.
+  </p>
+
+  <h2 id="definition">1. Definition</h2>
+  <p>
+    A <strong>Ralph Loop</strong> is a directory containing one required file —
+    <code>RALPH.md</code> — and zero or more optional bundled files. The
+    directory itself is the unit of portability: share it as a git subdirectory,
+    a standalone repo, or an archive.
+  </p>
+
+  <h2 id="layout">2. Structure</h2>
+  <p>
+    The package root is the directory containing <code>RALPH.md</code>. No
+    subdirectory layout is required beyond that file. Example:
+  </p>
+  <pre><code>bug-hunter/
+├── RALPH.md
+├── README.md
+└── prompts/
+    └── edge-cases.md</code></pre>
+  <p>
+    A package may bundle scripts, prompts, templates, fixtures, reference docs,
+    or any other files the agent needs. Runtimes MUST resolve bundled file
+    references relative to the package root and reject path traversal that
+    escapes it.
+  </p>
+
+  <h2 id="ralph-md">3. RALPH.md structure</h2>
+  <p><code>RALPH.md</code> consists of optional YAML frontmatter followed by a markdown body:</p>
+  <pre><code>---
+agent: claude -p --dangerously-skip-permissions
+commands:
+  - name: tests
+    run: uv run pytest -x
+  - name: lint
+    run: uv run ruff check .
+args:
+  - bug_report
+---
+
+# Bug Hunter
+
+Reproduce, localize, and patch the reported bug.
+
+## Bug report
+{{ args.bug_report }}
+
+## Test results
+{{ commands.tests }}
+
+## Lint
+{{ commands.lint }}
+
+## Instructions
+
+1. Read the bug report above.
+2. Write a failing test to reproduce the bug.
+3. Localize the root cause.
+4. Make the smallest useful fix.
+5. Run tests and lint. Commit only if everything passes.</code></pre>
+
+  <h2 id="metadata">4. Metadata fields</h2>
+  <p>The frontmatter supports exactly three fields:</p>
+  <table>
+    <thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><code>agent</code></td><td>string</td><td>The command to run (e.g., <code>claude -p</code>).</td></tr>
+      <tr><td><code>commands</code></td><td>list of objects</td><td>Each object has a <code>name</code> (referenced in the body via <code>{{ commands.&lt;name&gt; }}</code>) and a <code>run</code> (shell command to execute).</td></tr>
+      <tr><td><code>args</code></td><td>list of strings</td><td>Argument names that become CLI flags, referenced in the body via <code>{{ args.&lt;name&gt; }}</code>.</td></tr>
+    </tbody>
+  </table>
+  <p>Frontmatter is optional. A package with no frontmatter is valid but minimally described.</p>
+
+  <h2 id="body">5. Markdown body</h2>
+  <p>
+    The body is agent-facing instructions. The format does not impose structure
+    on it. Recommended sections: <code>Goal</code>, <code>Context</code>,
+    <code>Loop</code>, <code>Constraints</code>, <code>Validation</code>,
+    <code>Exit Conditions</code>.
+  </p>
+
+  <hr>
+  <p class="muted small">
+    The canonical specification lives in
+    <a href="https://github.com/ralphloops/ralphloops/tree/main/specification">ralphloops/ralphloops/specification</a>.
+    This page tracks the current published draft.
+  </p>
+</main>
+
+</body>
+</html>
