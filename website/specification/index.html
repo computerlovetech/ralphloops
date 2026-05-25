@@ -92,14 +92,16 @@ Reproduce, localize, and patch the reported bug.
 
   <h2 id="metadata">4. Metadata fields</h2>
   <p>The frontmatter supports exactly three fields:</p>
-  <table>
-    <thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead>
-    <tbody>
-      <tr><td><code>agent</code></td><td>string</td><td>The command to run (e.g., <code>claude -p</code>).</td></tr>
-      <tr><td><code>commands</code></td><td>list of objects</td><td>Each object has a <code>name</code> (referenced in the body via <code>{{ commands.&lt;name&gt; }}</code>) and a <code>run</code> (shell command to execute).</td></tr>
-      <tr><td><code>args</code></td><td>list of strings</td><td>Argument names that become CLI flags, referenced in the body via <code>{{ args.&lt;name&gt; }}</code>.</td></tr>
-    </tbody>
-  </table>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Field</th><th>Type</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>agent</code></td><td>string</td><td>The command to run (e.g., <code>claude -p</code>).</td></tr>
+        <tr><td><code>commands</code></td><td>list of objects</td><td>Each object has a <code>name</code> (referenced in the body via <code>{{ commands.&lt;name&gt; }}</code>) and a <code>run</code> (shell command to execute).</td></tr>
+        <tr><td><code>args</code></td><td>list of strings</td><td>Argument names that become CLI flags, referenced in the body via <code>{{ args.&lt;name&gt; }}</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
   <p>Frontmatter is optional. A package with no frontmatter is valid but minimally described.</p>
 
   <h2 id="body">5. Markdown body</h2>

@@ -78,15 +78,19 @@ p { margin: 0 0 16px; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
   padding: 14px 24px;
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   color: var(--text);
   font-weight: 700;
+  min-width: 0;
 }
 .brand:hover { text-decoration: none; }
 .brand-mark { font-size: 20px; }
@@ -186,10 +190,44 @@ p { margin: 0 0 16px; }
 @media (max-width: 760px) {
   .grid-2 { grid-template-columns: 1fr; gap: 24px; }
   h1 { font-size: 34px; }
-  .hero { padding: 64px 0 40px; }
+  h2 { font-size: 24px; }
+  .hero { padding: 56px 0 32px; }
   .section { padding: 48px 0; }
   .nav-links { gap: 14px; }
   .nav-links a { font-size: 13px; }
+  .lede { font-size: 20px; }
+  .sub { font-size: 16px; }
+  .doc { padding: 56px 24px 80px; }
+  .doc h1 { font-size: 30px; }
+  .doc h2 { font-size: 22px; margin-top: 40px; }
+}
+
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+  .nav { padding: 12px 16px; gap: 8px 12px; }
+  .brand-tag { display: none; }
+  .brand-name { font-size: 15px; }
+  .nav-links { gap: 12px; }
+  .nav-github { padding: 5px 10px; }
+
+  h1 { font-size: 28px; }
+  h2 { font-size: 21px; margin-bottom: 18px; }
+  .lede { font-size: 18px; }
+  .sub { font-size: 15px; }
+
+  .hero { padding: 40px 0 28px; }
+  .section { padding: 36px 0; }
+
+  .btn { padding: 10px 14px; font-size: 13px; }
+  .cta-row { gap: 8px; margin-bottom: 28px; }
+
+  code, pre { font-size: 13px; }
+  pre { padding: 12px 14px; border-radius: 6px; }
+
+  .doc { padding: 40px 16px 64px; }
+  .doc h1 { font-size: 26px; margin-bottom: 18px; }
+  .doc h2 { font-size: 20px; margin-top: 32px; }
+  .doc h3 { font-size: 17px; margin-top: 24px; }
 }
 
 .cards {
@@ -228,6 +266,9 @@ li { margin-bottom: 6px; }
 .doc h2 { font-size: 24px; margin-top: 48px; }
 .doc h3 { font-size: 18px; margin-top: 32px; }
 .doc hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
+.doc p { overflow-wrap: break-word; }
+.table-scroll { overflow-x: auto; margin: 16px 0; -webkit-overflow-scrolling: touch; }
 .doc table { width: 100%; border-collapse: collapse; margin: 16px 0; }
-.doc th, .doc td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
+.table-scroll table { margin: 0; min-width: 480px; }
+.doc th, .doc td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
 .doc th { color: var(--muted); font-weight: 600; }
